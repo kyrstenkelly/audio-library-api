@@ -1,0 +1,37 @@
+{
+  "name": "audio-library-api",
+  "version": "0.0.1",
+  "description": "An API for storing and accessing an audio library.",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src -d dist",
+    "start": "npm run build && nodemon dist/index.js",
+    "serve": "node dist/index.js",
+    "test": "mocha -w --recursive --require @babel/register"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "audio",
+    "api",
+    "REST",
+    "mongodb"
+  ],
+  "author": "Kyrsten Kelly",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.1",
+    "sinon": "^7.3.2",
+    "sinon-chai": "^3.3.0"
+  }
+}
