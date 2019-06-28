@@ -1,16 +1,28 @@
+import 'babel-polyfill';
 import express from 'express';
 import routes from './routes';
+import { initDb } from './db/index';
+import seed from './db/seed';
 
+require('dotenv').config()
 const app = express();
 
-app.get('/', (_, res) => {
-  res.send('Audio Library API. Please see <a href="https://github.com/kyrstenkelly/audio-library-api">docs</a> for usage.');
-});
+initDb().then((database) => {
+  const port = process.env.SERVICE_PORT;
 
-app.get('/tracks', routes.getTracks);
+  if (process.env.AUTOSEED) {
+    seed(database);
+  }
 
-app.server = app.listen(3000, () => {
-  console.log("Server running on port 3000");
-});
+  app.get('/', (_, res) => {
+    return res.send('Audio Library API. Please see <a href="https://github.com/kyrstenkelly/audio-library-api">docs</a> for usage.');
+  });
+
+  app.get('/tracks', routes.getTracks);
+
+  app.server = app.listen(port, () =>
+    console.log(`Server listening on port ${port}`),
+  );
+}).catch(e => console.error(e));
 
 export default app;
