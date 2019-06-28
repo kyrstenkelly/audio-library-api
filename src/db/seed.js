@@ -2,7 +2,7 @@ import fs from 'fs';
 import mongo from 'mongodb';
 import mockMetadata from './mock-data/metadata';
 
-const dataDirectory = `${__dirname}/mocks/tracks`;
+const dataDirectory = `${__dirname}/mock-data`;
 
 export default (db) => {
   const collection = db.collection('fs.files');

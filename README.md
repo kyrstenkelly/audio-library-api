@@ -6,8 +6,10 @@ For more details on the endpoints, view the [API Docs](./docs/api.md).
 
 To run the service locally:
 
-1. Install dependencies  
+1. Clone the repo & install dependencies  
     ```
+    git clone git@github.com:kyrstenkelly/audio-library-api.git
+    cd audio-library-api
     npm install
     ```
 
@@ -15,13 +17,17 @@ To run the service locally:
     [See the install instructions](https://docs.mongodb.com/manual/installation/) if you haven't done this before.
 
 3. Create a `.env` file:
-    ```
+    ```bash
+     # Must download audio files for autoseeding, see below
     AUTOSEED=true
     DB_NAME=audioLibrary
     DB_URL=mongodb://localhost:27017
     SERVICE_PORT=8080
     ```
-    The `AUTOSEED` variable is for local develoment, and if `true`, will auto-seed your database with a few audio tracks.
+    
+    a) The `AUTOSEED` variable is for local develoment, and if `true`, will auto-seed your database with a few audio tracks. You will first want to add a few audio files into the the `src/db/mock-data/` folder. 
+    The files that match the `src/db/mock-data/metadata` can be found in [this public drive folder](https://drive.google.com/drive/folders/1BsGeGv8JwCw2trWIlTQ3cCCC8RW9HVOt) so you can easily download them and get started.
+
    
 4. Run the service!
     ```
