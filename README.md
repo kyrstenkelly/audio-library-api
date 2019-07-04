@@ -19,12 +19,13 @@ To run the service locally:
 3. Create a `.env` file:
     ```bash
      # Must download audio files for autoseeding, see below
+    ENV=development
     AUTOSEED=true
     MONGODB_URI=mongodb://localhost:27017/<db_name>
     SERVICE_PORT=8080
     ```
     
-    a) The `AUTOSEED` variable is for local develoment, and if `true`, will auto-seed your database with a few audio tracks. You will first want to add a few audio files into the the `src/db/mock-data/` folder. 
+    a) The `AUTOSEED` variable is for local develoment, and if `true`, will auto-seed your database with a few audio tracks. `ENV` will also have to be set to `development`. You will first want to add a few audio files into the the `src/db/mock-data/` folder. 
     The files that match the `src/db/mock-data/metadata` can be found in [this public drive folder](https://drive.google.com/drive/folders/1BsGeGv8JwCw2trWIlTQ3cCCC8RW9HVOt) so you can easily download them and get started.
 
    

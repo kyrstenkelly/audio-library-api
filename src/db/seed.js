@@ -5,6 +5,11 @@ import mockMetadata from './mock-data/metadata';
 const dataDirectory = `${__dirname}/mock-data`;
 
 export default (db) => {
+  // Only seed in dev mode
+  if (process.env.ENV !== 'development') {
+    return;
+  }
+
   const collection = db.collection('fs.files');
 
   collection.findOne().then((existingFile) => {
