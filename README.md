@@ -22,7 +22,6 @@ To run the service locally:
     ENV=development
     AUTOSEED=true
     MONGODB_URI=mongodb://localhost:27017/<db_name>
-    SERVICE_PORT=8080
     ```
     
     a) The `AUTOSEED` variable is for local develoment, and if `true`, will auto-seed your database with a few audio tracks. `ENV` will also have to be set to `development`. You will first want to add a few audio files into the the `src/db/mock-data/` folder. 

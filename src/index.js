@@ -8,7 +8,7 @@ require('dotenv').config()
 const app = express();
 
 const appPromise = initDb().then((database) => {
-  const port = process.env.SERVICE_PORT;
+  const port = process.env.PORT || 8080;
 
   if (process.env.AUTOSEED) {
     seed(database);
