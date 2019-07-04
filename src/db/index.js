@@ -5,11 +5,9 @@ let mongoClient;
  * Initialize the database and the gridfs stream
  */
 const initDb = () => {
-  const url = `${process.env.DB_URL}/${process.env.DB_NAME}`;
-
-  console.log(`Connecting to url ${url}`);
+  console.log(`Connecting to url ${process.env.MONGODB_URI}`);
   // Pass useNewUrlParser option to supress MongoClient deprecation warning
-  return MongoClient.connect(url, { useNewUrlParser: true })
+  return MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
     .then((client) => {
       mongoClient = client;
       return client.db();

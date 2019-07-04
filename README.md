@@ -20,8 +20,7 @@ To run the service locally:
     ```bash
      # Must download audio files for autoseeding, see below
     AUTOSEED=true
-    DB_NAME=audioLibrary
-    DB_URL=mongodb://localhost:27017
+    MONGODB_URI=mongodb://localhost:27017/<db_name>
     SERVICE_PORT=8080
     ```
     
