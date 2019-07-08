@@ -1,34 +1,14 @@
 import { MongoClient } from 'mongodb';
-let mongoClient;
+import config from '../config';
 
 /**
  * Initialize the database and the gridfs stream
  */
-const initDb = () => {
-  console.log(`Connecting to url ${process.env.MONGODB_URI}`);
+const initDb = async () => {
+  console.log(`Connecting to url ${config.MONGODB_URI}`);
   // Pass useNewUrlParser option to supress MongoClient deprecation warning
-  return MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
-    .then((client) => {
-      mongoClient = client;
-      return client.db();
-    })
-    .catch((e) => {
-      throw new Error(e);
-    });
-}
-
-/**
- * Gracefully disconnect when process is killed
- */
-process.on('SIGINT', () => {
-  if (mongoClient && mongoClient.close) {
-    mongoClient.close().then(() => {
-      console.log('\nDisconnected from db');
-      process.exit();
-    });
-  } else {
-    process.exit();
-  }
-});
+  return await MongoClient.connect(config.MONGODB_URI, { useNewUrlParser: true })
+    .catch((e) => { throw new Error(e); });
+};
 
 export default initDb;

@@ -3,24 +3,43 @@ import express from 'express';
 import configureRoutes from './routes';
 import initDb from './db/index';
 import seed from './db/seed';
+import config from './config';
 
-require('dotenv').config()
+/**
+ * Initialize app & database
+ */
 const app = express();
+const port = config.PORT || 8080;
+let mongoClient;
 
-const appPromise = initDb().then((database) => {
-  const port = process.env.PORT || 8080;
+export default initDb().then(client => {
+  mongoClient = client;
 
-  if (process.env.AUTOSEED) {
+  const database = client.db();
+
+  if (config.AUTOSEED) {
     seed(database);
   }
 
   configureRoutes(app, database);
 
   app.server = app.listen(port, () =>
-    console.log(`Server listening on port ${port}`),
+    console.log(`Server listening on port ${port}`)
   );
 
   return app;
-}).catch(e => console.error(e));
+});
 
-export default appPromise;
+/**
+ * Gracefully disconnect db when process is killed
+ */
+process.on('SIGINT', () => {
+  if (mongoClient && mongoClient.close) {
+    mongoClient.close().then(() => {
+      console.log('\nDisconnected from db');
+      process.exit();
+    });
+  } else {
+    process.exit();
+  }
+});
