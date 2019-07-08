@@ -5,7 +5,7 @@ const createHandler = (fn, db) => {
   return (req, res) => {
     fn(req, res, db);
   };
-}
+};
 
 const configureRoutes = (app, db) => {
   app.get('/', (_, res) => {
@@ -27,6 +27,6 @@ const configureRoutes = (app, db) => {
 
   // Static endpoints
   app.get('/static/:id', createHandler(staticFiles.getFile, db));
-}
+};
 
 export default configureRoutes;

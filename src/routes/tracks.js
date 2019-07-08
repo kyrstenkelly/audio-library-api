@@ -43,4 +43,4 @@ export default {
    * Delete track
    */
   // deleteTrack: (req, res, db) => {}
-}
+};
