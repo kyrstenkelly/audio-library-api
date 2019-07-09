@@ -1,4 +1,5 @@
 import mongo from 'mongodb';
+import mp3Duration from 'mp3-duration';
 import streamifier from 'streamifier';
 
 const COLLECTION = 'fs.files';
@@ -36,22 +37,39 @@ export default {
   createTrack: async (req, res, db) => {
     const { album, artist, title } = req.body;
     const file = await req.file;
-    const filename = file.originalname;
 
     if (!file || !title) {
       res.status(400).send('File and Title are required fields');
     }
 
+    const filename = file.originalname;
+    const duration = await new Promise((resolve, reject) => {
+      mp3Duration(file.buffer, (err, dur) => {
+        if (err) reject(err);
+        resolve(dur);
+      });
+    });
+
     const bucket = new mongo.GridFSBucket(db);
     const uploadStream = bucket.openUploadStream(filename, {
-      metadata: { album, artist, title, filename }
+      metadata: {
+        album,
+        artist,
+        duration,
+        filename,
+        title
+      }
     });
 
     return await streamifier.createReadStream(file.buffer)
       .pipe(uploadStream)
       .on('finish', () => {
         res.send({
-          album, artist, title, filename
+          album,
+          artist,
+          duration,
+          filename,
+          title
         });
       })
       .on('error', (err) => {
