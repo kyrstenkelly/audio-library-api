@@ -12,7 +12,12 @@ import config from './config';
 const app = express();
 const port = config.PORT || 8080;
 let mongoClient;
+
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 export default initDb().then(client => {
   mongoClient = client;
