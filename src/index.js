@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import bodyParser from 'body-parser';
 import express from 'express';
 import configureRoutes from './routes';
 import initDb from './db/index';
@@ -11,6 +12,7 @@ import config from './config';
 const app = express();
 const port = config.PORT || 8080;
 let mongoClient;
+app.use(bodyParser.json());
 
 export default initDb().then(client => {
   mongoClient = client;

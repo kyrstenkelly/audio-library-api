@@ -1,5 +1,8 @@
+import multer from 'multer';
 import tracks from './tracks';
 import staticFiles from './static';
+
+const upload = multer();
 
 const createHandler = (fn, db) => {
   return (req, res) => {
@@ -17,11 +20,11 @@ const configureRoutes = (app, db) => {
 
   // CRUD endpoints for tracks
   app.get('/tracks', createHandler(tracks.getTracks, db));
+  app.post('/tracks', upload.single('file'), createHandler(tracks.createTrack, db));
 
   // TODO:
   // Endpoints to be implemented
   // app.get('/tracks/:id', createHandler(tracks.getTrack, db));
-  // app.post('/tracks', createHandler(tracks.createTrack, db));
   // app.put('/tracks', createHandler(tracks.updateTrack, db));
   // app.delete('/tracks/:id', createHandler(tracks.deleteTrack, db));
 

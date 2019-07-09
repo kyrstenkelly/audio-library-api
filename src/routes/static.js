@@ -22,13 +22,11 @@ export default {
       downloadStream.pipe(res);
       downloadStream.on('error', (error) => {
         console.log(error);
-        res.status(500);
-        res.send('Error streaming file');
+        res.status(500).send('Error streaming file');
       });
     }).catch(error => {
       console.log(error);
-      res.status(500);
-      res.send('Error streaming file');
+      res.status(500).send('Error streaming file');
     });
   }
 };
