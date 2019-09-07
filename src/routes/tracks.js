@@ -1,5 +1,5 @@
 import mongo from 'mongodb';
-import mp3Duration from 'mp3-duration';
+import * as musicMetadata from 'music-metadata';
 import streamifier from 'streamifier';
 
 const COLLECTION = 'fs.files';
@@ -43,19 +43,14 @@ export default {
     }
 
     const filename = file.originalname;
-    const duration = await new Promise((resolve, reject) => {
-      mp3Duration(file.buffer, (err, dur) => {
-        if (err) reject(err);
-        resolve(dur);
-      });
-    });
+    const metadata = await musicMetadata.parseFile(filename, {duration: true});
 
     const bucket = new mongo.GridFSBucket(db);
     const uploadStream = bucket.openUploadStream(filename, {
       metadata: {
         album,
         artist,
-        duration,
+        duration: metadata.format.duration,
         filename,
         title
       }
