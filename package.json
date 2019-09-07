@@ -26,8 +26,8 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "mongodb": "^3.2.7",
-    "mp3-duration": "^1.1.0",
     "multer": "^1.4.1",
+    "music-metadata": "^4.5.2",
     "redux": "^4.0.1",
     "streamifier": "^0.1.1"
   },
